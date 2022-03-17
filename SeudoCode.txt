@@ -1,0 +1,43 @@
+﻿program journey:
+Add year
+=> Get the last year and next year
+=> get the months of those year
+=> get the days
+=> get weeks
+=> generate HTML from template
+
+----
+AddYear(int year)
+=> if year = 1582
+		=> return this year and the next
+	=> else 
+		=> return last year, this year, and the next
+=> add to ListOfYears
+
+----
+YearChecker(int year)
+=> process year
+	=> if year < 1582 
+		=> ask to enter again
+=> AddYear(year)
+	
+----
+MonthsOfYearCheck(int year)
+=> devide by 4
+	=> if devided by 4 
+		=> return as leap year
+	else if year is 1582
+		=> return months since Oct for this year
+		=> add full 12 months for next year
+	=> else 
+		=> add as normal year
+----
+GetMonths(int year)
+Foreach year { 
+YearMonthCheck(year)
+=> add months with each year
+}
+
+-----
+GetDaysOfMonth(int year)
+=> 
