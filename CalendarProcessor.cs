@@ -22,7 +22,7 @@ namespace CalendarChallenge
         }
 
         public string HtmlBodyScriptGenerator(int year, int daysInMonth, string month) 
-            => GenerateMonthsScript(year, daysInMonth, month).ToString();
+            => string.Join(" ", GenerateMonthsScript(year, daysInMonth, month));
 
         public string HtmlFooterScript()
         {
@@ -30,7 +30,7 @@ namespace CalendarChallenge
             return footer;
         }
 
-        private string GenerateMonthsScript(int year, int daysInMonth, string month)
+        private List<string> GenerateMonthsScript(int year, int daysInMonth, string month)
         {
             List<string> daysToDisplay = new List<string>();
             List<string> monthToDisplay = new List<string>();
@@ -53,7 +53,7 @@ namespace CalendarChallenge
             monthToDisplay.AddRange(daysToDisplay);
 
             //each month corelate to each weekdays and daysToDisplay
-            return monthToDisplay.ToString();
+            return monthToDisplay;
         }
 
         private List<string> GenerateDaysWithinMonth(int daysInMonth)
