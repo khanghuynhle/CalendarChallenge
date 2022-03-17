@@ -10,9 +10,12 @@ namespace CalendarChallenge
     internal class CalendarProcessor : ICalendarProcessor
     {
         private readonly ListOfCalendar _listCal;
-        public CalendarProcessor(ListOfCalendar listCal)
+        private readonly IDayHelper _dayHelper;
+        private int NextDate { get; set; } = 0;
+        public CalendarProcessor(ListOfCalendar listCal, IDayHelper dayHelper)
         {
             _listCal = listCal;
+            _dayHelper = dayHelper;
         }
 
         public string HtmlHeaderScript(int year)
@@ -21,36 +24,52 @@ namespace CalendarChallenge
             return header;
         }
 
-        public string HtmlBodyScriptGenerator(int year, int daysInMonth, string month) 
+        public string HtmlBodyScriptGenerator(int year, int daysInMonth, string month)
             => string.Join(" ", GenerateMonthsScript(year, daysInMonth, month));
 
         public string HtmlFooterScript()
         {
-            string footer = "</table> </body > </html >";
+            string footer = "</ul></body></html>";
             return footer;
         }
 
         private List<string> GenerateMonthsScript(int year, int daysInMonth, string month)
-        { 
+        {
             List<string> daysToDisplay = new List<string>();
             List<string> monthToDisplay = new List<string>();
-            string daysInAWeek = "<table> <td >Su</td><td> Mo </td ><td> Tu </td><td> We </td><td> Th </td><td> Fr </td><td> Sa </td >";
+            string daysInAWeek = "<ul class=\"weekdays\"><li>Mo</li><li>Tu</li><li>We</li><li>Th</li><li>Fr</li><li>Sa</li><li>Su</li></ul><ul class=\"days\">";
 
-            string monthMakeUp = " <tr>" + month.ToString() + "</div> </tr>";
+            string monthMakeUp = "<div class=\"month\"> <ul><li class=\"prev\">&#10094;</li><li class=\"next\">&#10095;</li><li>" + month + "<br></li></ul></div>";
             monthToDisplay.Add(monthMakeUp);
 
-            //add empty spaces before the first month
-            if (month =="Janurary")
-                daysToDisplay.Add(GenerateEmptySpaces((int)_listCal.FirstDayOfYears[0], 0));
-            else if (month == "October" && year == 1582)
-                daysToDisplay.Add(GenerateEmptySpaces(0, 0));
-
-            daysToDisplay = GenerateDaysWithinMonth(daysInMonth);
+            //add empty spaces before the first month of the years
+            for (int firstDay = 0; firstDay < _listCal.FirstDayOfYears.Count; firstDay++)
+            {
+                if (month == "Janurary")
+                {
+                    daysToDisplay.Add(string.Join("", GenerateEmptySpacesFirstMonth((int)_listCal.FirstDayOfYears[firstDay], 0)));
+                    break;
+                }
+                else if (month == "October" && year == 1582)
+                {
+                    break;
+                }
+            }
+            daysToDisplay.Add(string.Join("", GenerateDaysWithinMonth(daysInMonth)));
 
             //add weeks of this month
             //calculate how many empty days before the starting day
             monthToDisplay.Add(daysInAWeek);
+            var repeatedTimes = _listCal.YearDayForward.Select(x => x.Item2).ElementAt(_listCal.ListOfTotaldaysOfAMonth.IndexOf(new Tuple<int,string>(daysInMonth, month)));
+            //wrap the forward days here
+            monthToDisplay.AddRange(GenerateEmptySpaceRemainingMonths(repeatedTimes));
+
+            //displaying the whole month here
             monthToDisplay.AddRange(daysToDisplay);
+
+            //the left days here
+            repeatedTimes = _listCal.YearDayLeft.Select(x => x.Item2).ElementAt(_listCal.ListOfTotaldaysOfAMonth.IndexOf(new Tuple<int, string>(daysInMonth, month)));
+            monthToDisplay.AddRange(GenerateEmptySpaceRemainingMonths(repeatedTimes));
 
             //each month corelate to each weekdays and daysToDisplay
             return monthToDisplay;
@@ -61,28 +80,38 @@ namespace CalendarChallenge
             List<string> daysToDisplay = new List<string>();
             for (int day = 1; day <= daysInMonth; day++)
             {
-                daysToDisplay.Add("<td>" + day + "</td>");
+                daysToDisplay.Add("<li>" + day + "</li>");
             }
 
             return daysToDisplay;
         }
 
-        private string GenerateEmptySpaces(int startDate, int weekDay)
+        private List<string> GenerateEmptySpacesFirstMonth(int startDate, int weekDay)
         {
             int emptyDays = GetEmptyDays(startDate, weekDay);
             List<string> emptyDaysScripts = new List<string>();
             if (emptyDays == 0)
             {
-                return "";
+                return emptyDaysScripts;
             }
             else
             {
                 for (int i = 1; i <= emptyDays; i++)
                 {
-                    emptyDaysScripts.Add("<td><!--BLANK--></td>");
+                    emptyDaysScripts.Add("<li> X </li>");
                 }
-                return emptyDaysScripts.ToString();
+                return emptyDaysScripts;
             }
+        }
+
+        private List<string> GenerateEmptySpaceRemainingMonths(int timeRepeated)
+        {
+            List<string> spaces = new List<string>();
+            for(int i = 0; i < timeRepeated; i++)
+            {
+                spaces.Add("<li> X </li>");
+            }
+            return spaces;
         }
 
         private int GetEmptyDays(int startDate, int weekDay)

@@ -31,7 +31,7 @@ namespace CalendarChallenge
 
             //process weekday + day + month + year 
             _yearHelper.YearChecker(year);
-            _listCal.FirstDayOfYears = new System.Collections.Generic.List<int>();
+            _listCal.FirstDayOfYears = new List<int>();
 
             foreach (int yearToProcess in _listCal.Years)
             {
@@ -45,13 +45,19 @@ namespace CalendarChallenge
             }
 
             //add month
-
+            foreach (int firstday in _listCal.FirstDayOfYears) {
+                for (int i = 0; i < _listCal.ListOfTotaldaysOfAMonth.Count; i++)
+                {
+                    _dayHelper.CalculateFirstDayOfMonth(_listCal.FirstDayOfYears.IndexOf(firstday) + 1, firstday, _listCal.ListOfTotaldaysOfAMonth[i].Item1);
+                }
+            }
             //generate HTML page here
             Body = new List<string>();
             //passing in totalDaysOfMonths based on the year
             foreach (int yearToProcess in _listCal.Years)
             {
-                foreach (var yearsDaysOfMonth in _listCal.ListOfMonthsWithTotalDays)
+                
+                foreach (var yearsDaysOfMonth in _listCal.ListOfTotaldaysOfAMonth)
                 {
                     Body.Add(_processor.HtmlBodyScriptGenerator(yearToProcess, yearsDaysOfMonth.Item1, yearsDaysOfMonth.Item2));
                 }

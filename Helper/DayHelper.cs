@@ -1,6 +1,7 @@
 ﻿using CalendarChallenge.Interface;
 using CalendarChallenge.Property;
 using System;
+using System.Collections.Generic;
 
 namespace CalendarChallenge.Helper
 {
@@ -26,6 +27,32 @@ namespace CalendarChallenge.Helper
             {
                 _listCalendar.TotalDaysOfMonths.RemoveRange(0, 9);
             }
+        }
+        public void CalculateFirstDayOfMonth(int year, int firstDay, int daysInMonth)
+        {
+            int dayLeft = CalculateDaysLeftInMonth(firstDay, daysInMonth);
+            int dayForward = CauclateDayForwardInMonth(dayLeft, daysInMonth);
+            _listCalendar.YearDayForward = new List<Tuple<int, int>>
+            {
+                new Tuple<int, int>(year, dayForward)
+            };
+            _listCalendar.YearDayLeft = new List<Tuple<int, int>>
+            {
+                new Tuple<int, int>(year, dayLeft)
+            };
+        }
+
+        private int CauclateDayForwardInMonth(int daysLeft, int daysInMonth)
+        {
+            int dayForwards = 7 - daysLeft;
+
+            return dayForwards;
+        }
+
+        private int CalculateDaysLeftInMonth(int firstDay, int daysInMonth)
+        {
+            int daysLeft = 35 - firstDay + 1 - daysInMonth;
+            return daysLeft;
         }
     }
 }
