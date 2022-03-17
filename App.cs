@@ -52,7 +52,7 @@ namespace CalendarChallenge
             {
                 Body.Add(_processor.HtmlBodyScriptGenerator(yearsDaysOfMonth.Item1, yearsDaysOfMonth.Item2, yearsDaysOfMonth.Item3));
             }
-            string html = _processor.HtmlHeaderScript(year) + Body + _processor.HtmlFooterScript();
+            string html = string.Join("", _processor.HtmlHeaderScript(year) + Body + _processor.HtmlFooterScript());
             File.WriteAllText(@"C:\Calendar " + year + ".html", html);
 
             Console.WriteLine("Html file is created under C drive with name as: Calendar.htm");

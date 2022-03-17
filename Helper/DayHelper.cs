@@ -22,6 +22,10 @@ namespace CalendarChallenge.Helper
             {
                 _listCalendar.TotalDaysOfMonths[1] = 29;
             }
+            if(year == 1582)
+            {
+                _listCalendar.TotalDaysOfMonths.RemoveRange(0, 9);
+            }
         }
     }
 }
