@@ -97,10 +97,10 @@ namespace CalendarChallenge
             return emptyDays;
         }
 
-        public DayOfWeek GetFirstDayOfYear(int year)
+        public int GetFirstDayOfYear(int year)
         {
             int firstDay = (((year - 1) * 365) + ((year - 1) / 4) - ((year - 1) / 100) + ((year) / 400) + 1) % 7;
-            return (DayOfWeek)Enum.ToObject(typeof(DayOfWeek), firstDay);
+            return firstDay;
         }
     }
 }

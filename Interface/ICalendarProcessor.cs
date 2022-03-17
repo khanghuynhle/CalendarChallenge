@@ -6,7 +6,7 @@ namespace CalendarChallenge.Interface
 {
     public interface ICalendarProcessor
     {
-        DayOfWeek GetFirstDayOfYear(int year);
+        int GetFirstDayOfYear(int year);
 
         void CalendarUIGenerator(int year, int daysInMonth);
     }

@@ -27,11 +27,11 @@ namespace CalendarChallenge
 
             //process weekday + day + month + year 
             _yearHelper.YearChecker(year);
+            _listCal.FirstDayOfYears = new System.Collections.Generic.List<int>();
 
             foreach (int yearToProcess in _listCal.Years)
             {
                 //get the first day of the year
-                _listCal.FirstDayOfYears = new System.Collections.Generic.List<DayOfWeek>();
                 _listCal.FirstDayOfYears.Add(_processor.GetFirstDayOfYear(yearToProcess));
 
                 //decide how many days in a month
