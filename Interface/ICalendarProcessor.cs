@@ -8,7 +8,7 @@ namespace CalendarChallenge.Interface
     {
         int GetFirstDayOfYear(int year);
         string HtmlHeaderScript(int year);
-        string HtmlBodyScriptGenerator(int year, int daysInMonth);
+        string HtmlBodyScriptGenerator(int year, int daysInMonth, string month);
         string HtmlFooterScript();
     }
 }

@@ -15,31 +15,33 @@ namespace CalendarChallenge
         }
         public void AddMonth()
         {
-            _listCalendar.ListOfMonthsWithYears = new List<Tuple<int, string>>();
-            _listCalendar.TotalMonths = new List<int>();
+            _listCalendar.ListOfYearMonthsWithTotalDays = new List<Tuple<int, int, string>>();
             foreach (int year in _listCalendar.Years)
             {
-                if(year == 1582)
+                foreach (int daysOfMonths in _listCalendar.TotalDaysOfMonths)
                 {
-                    _listCalendar.ListOfMonthsWithYears.Add(new Tuple<int, string>(year, "October"));
-                    _listCalendar.ListOfMonthsWithYears.Add(new Tuple<int, string>(year, "November"));
-                    _listCalendar.ListOfMonthsWithYears.Add(new Tuple<int, string>(year, "December"));
+                    if (year == 1582)
+                    {
+                        _listCalendar.ListOfYearMonthsWithTotalDays.Add(new Tuple<int, int, string>(year, daysOfMonths, "October"));
+                        _listCalendar.ListOfYearMonthsWithTotalDays.Add(new Tuple<int, int, string>(year, daysOfMonths, "November"));
+                        _listCalendar.ListOfYearMonthsWithTotalDays.Add(new Tuple<int, int, string>(year, daysOfMonths, "December"));
+                    }
+                    else
+                    {
+                        _listCalendar.ListOfYearMonthsWithTotalDays.Add(new Tuple<int, int, string>(year, daysOfMonths, "Janurary"));
+                        _listCalendar.ListOfYearMonthsWithTotalDays.Add(new Tuple<int, int, string>(year, daysOfMonths, "Feburary"));
+                        _listCalendar.ListOfYearMonthsWithTotalDays.Add(new Tuple<int, int, string>(year, daysOfMonths, "March"));
+                        _listCalendar.ListOfYearMonthsWithTotalDays.Add(new Tuple<int, int, string>(year, daysOfMonths, "April"));
+                        _listCalendar.ListOfYearMonthsWithTotalDays.Add(new Tuple<int, int, string>(year, daysOfMonths, "May"));
+                        _listCalendar.ListOfYearMonthsWithTotalDays.Add(new Tuple<int, int, string>(year, daysOfMonths, "June"));
+                        _listCalendar.ListOfYearMonthsWithTotalDays.Add(new Tuple<int, int, string>(year, daysOfMonths, "July"));
+                        _listCalendar.ListOfYearMonthsWithTotalDays.Add(new Tuple<int, int, string>(year, daysOfMonths, "August"));
+                        _listCalendar.ListOfYearMonthsWithTotalDays.Add(new Tuple<int, int, string>(year, daysOfMonths, "September"));
+                        _listCalendar.ListOfYearMonthsWithTotalDays.Add(new Tuple<int, int, string>(year, daysOfMonths, "October"));
+                        _listCalendar.ListOfYearMonthsWithTotalDays.Add(new Tuple<int, int, string>(year, daysOfMonths, "November"));
+                        _listCalendar.ListOfYearMonthsWithTotalDays.Add(new Tuple<int, int, string>(year, daysOfMonths, "December"));
+                    }
                 }
-                else {
-                    _listCalendar.ListOfMonthsWithYears.Add(new Tuple<int, string>(year, "Janurary"));
-                    _listCalendar.ListOfMonthsWithYears.Add(new Tuple<int, string>(year, "Feburary"));
-                    _listCalendar.ListOfMonthsWithYears.Add(new Tuple<int, string>(year, "March"));
-                    _listCalendar.ListOfMonthsWithYears.Add(new Tuple<int, string>(year, "April"));
-                    _listCalendar.ListOfMonthsWithYears.Add(new Tuple<int, string>(year, "May"));
-                    _listCalendar.ListOfMonthsWithYears.Add(new Tuple<int, string>(year, "June"));
-                    _listCalendar.ListOfMonthsWithYears.Add(new Tuple<int, string>(year, "July"));
-                    _listCalendar.ListOfMonthsWithYears.Add(new Tuple<int, string>(year, "August"));
-                    _listCalendar.ListOfMonthsWithYears.Add(new Tuple<int, string>(year, "September"));
-                    _listCalendar.ListOfMonthsWithYears.Add(new Tuple<int, string>(year, "October"));
-                    _listCalendar.ListOfMonthsWithYears.Add(new Tuple<int, string>(year, "November"));
-                    _listCalendar.ListOfMonthsWithYears.Add(new Tuple<int, string>(year, "December"));
-                }
-                _listCalendar.TotalMonths.Add(_listCalendar.ListOfMonthsWithYears.Where(x => x.Item1 == year).Count());
             }
         }
     }

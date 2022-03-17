@@ -1,7 +1,9 @@
 ﻿using CalendarChallenge.Interface;
 using CalendarChallenge.Property;
 using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 
 namespace CalendarChallenge
 {
@@ -11,6 +13,7 @@ namespace CalendarChallenge
         private readonly IYearHelper _yearHelper;
         private readonly IMonthHelper _monthHelper;
         private readonly IDayHelper _dayHelper;
+        private List<string> Body { get; set; }
 
         private readonly ListOfCalendar _listCal;
         public App(ICalendarProcessor processor, IYearHelper yearHelper, ListOfCalendar listCal, IDayHelper dayHelper, IMonthHelper monthHelper)
@@ -43,22 +46,16 @@ namespace CalendarChallenge
             _monthHelper.AddMonth();
 
             //generate HTML page here
-            foreach(int yearToProcess in _listCal.Years)
+            Body = new List<string>();
+            //passing in totalDaysOfMonths based on the year
+            foreach (var yearsDaysOfMonth in _listCal.ListOfYearMonthsWithTotalDays)
             {
-                string body ="";
-
-                //passing in totalDaysOfMonths based on the year
-                foreach (int daysOfMonth in _listCal.TotalDaysOfMonths)
-                {
-                    body = _processor.HtmlBodyScriptGenerator(yearToProcess, daysOfMonth);
-                }
-                string html = _processor.HtmlHeaderScript(year) + body + _processor.HtmlFooterScript();
-                File.WriteAllText(@"C:\Calendar " + year + ".html", html);
-
+                Body.Add(_processor.HtmlBodyScriptGenerator(yearsDaysOfMonth.Item1, yearsDaysOfMonth.Item2, yearsDaysOfMonth.Item3));
             }
+            string html = _processor.HtmlHeaderScript(year) + Body + _processor.HtmlFooterScript();
+            File.WriteAllText(@"C:\Calendar " + year + ".html", html);
+
             Console.WriteLine("Html file is created under C drive with name as: Calendar.htm");
-
-
         }
     }
 }
