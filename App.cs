@@ -31,6 +31,7 @@ namespace CalendarChallenge
             foreach (int yearToProcess in _listCal.Years)
             {
                 //get the first day of the year
+                _listCal.FirstDayOfYears = new System.Collections.Generic.List<DayOfWeek>();
                 _listCal.FirstDayOfYears.Add(_processor.GetFirstDayOfYear(yearToProcess));
 
                 //decide how many days in a month
@@ -57,6 +58,8 @@ namespace CalendarChallenge
                     _processor.CalendarUIGenerator(yearToProcess, _listCal.TotalDaysOfMonths[i]);
                 }
             }
+            Console.WriteLine("Html file is created under C drive with name as: Calendar.htm");
+
         }
     }
 }

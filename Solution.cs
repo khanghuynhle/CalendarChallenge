@@ -1,12 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-// you can also use other imports, for example:
-// using System.Collections.Generic;
 
-// you can write to stdout for debugging purposes, e.g.
-// Console.WriteLine("this is a debug message");
-
+//this is from the code exercises from the website
 class Solution
 {
     public int solution(int N)

@@ -15,9 +15,8 @@ namespace CalendarChallenge
         }
         public void CalendarUIGenerator(int year, int daysInMonth)
         {
-            File.WriteAllText(@"C:\Calendar.htm", HtmlScriptGenerator(year, daysInMonth));
+            File.WriteAllText(@"C:\Calendar.html", HtmlScriptGenerator(year, daysInMonth));
 
-            Console.WriteLine("Html file is created under C drive with name as: Calendar.htm");
         }
 
         private string HtmlScriptGenerator(int year, int daysInMonth)
@@ -46,7 +45,7 @@ namespace CalendarChallenge
 
             for (int i = 0; i < _listCal.ListOfMonthsWithYears.Count; i++)
             {
-                DateTime month = _listCal.ListOfMonthsWithYears[i].Item2;
+                string month = _listCal.ListOfMonthsWithYears[i].Item2;
                 string monthMakeUp = "< div class=\"jzdcalt\">" + month.ToString() + "</div>";
 
                 //add empty spaces before the first month

@@ -24,18 +24,17 @@ namespace CalendarChallenge
         }
 		private void AddYears(int year)
         {
-			List<int> years = new List<int>();
+			_listCalendar.Years = new List<int>();
 			if (year == 1582)
             {
-				years.Add(year);
-				years.Add(year + 1);
+				_listCalendar.Years.Add(year);
+				_listCalendar.Years.Add(year + 1);
 			}
             else {
-				years.Add(year);
-				years.Add(year + 1);
-				years.Add(year + 1);
+				_listCalendar.Years.Add(year);
+				_listCalendar.Years.Add(year + 1);
+				_listCalendar.Years.Add(year - 1);
 			}
-			_listCalendar.Years.AddRange(years);
 		}
 		
 	}

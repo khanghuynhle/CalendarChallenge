@@ -1,0 +1,3 @@
+Reqruire to run the application:
+
+Open Visual studio as admin => to write the HTML page

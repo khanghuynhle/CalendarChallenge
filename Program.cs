@@ -40,7 +40,7 @@ namespace CalendarChallenge
             return services;
 
         }
-        public static IConfiguration LoadConfiguration()
+        private static IConfiguration LoadConfiguration()
         {
             var builder = new ConfigurationBuilder();
             return builder.Build();

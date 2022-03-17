@@ -15,6 +15,7 @@ namespace CalendarChallenge.Helper
         public void GetTotalDaysInMonths(int year)
         {
             int[] totalDays = new int[] { 31, 28, 31, 30, 31, 30, 31, 30, 31, 31, 30, 31 };
+            _listCalendar.TotalDaysOfMonths = new System.Collections.Generic.List<int>();
             _listCalendar.TotalDaysOfMonths.AddRange(totalDays);
 
             if((year%4 == 0 && year%100 != 0) || year % 400 == 0)
