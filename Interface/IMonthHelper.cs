@@ -6,6 +6,6 @@ namespace CalendarChallenge.Interface
 {
     public interface IMonthHelper
     {
-        void AddMonth();
+        void AddMonth(int year);
     }
 }

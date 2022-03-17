@@ -17,7 +17,7 @@ namespace CalendarChallenge
 
         public string HtmlHeaderScript(int year)
         {
-            string header = "<!DOCTYPE html>< html >< head ><title>Calendar of " + year.ToString() + "</title></ head >";
+            string header = "<!DOCTYPE html><html><head><title>Calendar of " + year.ToString() + "</title>  <link rel=\"stylesheet\" href=\"styles.css\"></head ><body>";
             return header;
         }
 
@@ -26,17 +26,17 @@ namespace CalendarChallenge
 
         public string HtmlFooterScript()
         {
-            string footer = "</div> </ body > </ html >";
+            string footer = "</table> </body > </html >";
             return footer;
         }
 
         private List<string> GenerateMonthsScript(int year, int daysInMonth, string month)
-        {
+        { 
             List<string> daysToDisplay = new List<string>();
             List<string> monthToDisplay = new List<string>();
-            string daysInAWeek = "<div class=\"jzdbox1 jzdbasf jzdcal\"> < span >Su</span>< span > Mo </ span >< span > Tu </ span >< span > We </ span >< span > Th </ span >< span > Fr </ span >< span > Sa </ span > ";
+            string daysInAWeek = "<table> <td >Su</td><td> Mo </td ><td> Tu </td><td> We </td><td> Th </td><td> Fr </td><td> Sa </td >";
 
-            string monthMakeUp = "< div class=\"jzdcalt\">" + month.ToString() + "</div>";
+            string monthMakeUp = " <tr>" + month.ToString() + "</div> </tr>";
             monthToDisplay.Add(monthMakeUp);
 
             //add empty spaces before the first month
@@ -61,7 +61,7 @@ namespace CalendarChallenge
             List<string> daysToDisplay = new List<string>();
             for (int day = 1; day <= daysInMonth; day++)
             {
-                daysToDisplay.Add("<span>" + day + "</span>");
+                daysToDisplay.Add("<td>" + day + "</td>");
             }
 
             return daysToDisplay;
@@ -79,7 +79,7 @@ namespace CalendarChallenge
             {
                 for (int i = 1; i <= emptyDays; i++)
                 {
-                    emptyDaysScripts.Add("<span class=\"jzdb\"><!--BLANK--></span>");
+                    emptyDaysScripts.Add("<td><!--BLANK--></td>");
                 }
                 return emptyDaysScripts.ToString();
             }

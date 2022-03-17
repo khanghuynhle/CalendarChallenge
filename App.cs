@@ -40,20 +40,24 @@ namespace CalendarChallenge
 
                 //decide how many days in a month
                 _dayHelper.GetTotalDaysInMonths(yearToProcess);
+                _monthHelper.AddMonth(yearToProcess);
+
             }
 
             //add month
-            _monthHelper.AddMonth();
 
             //generate HTML page here
             Body = new List<string>();
             //passing in totalDaysOfMonths based on the year
-            foreach (var yearsDaysOfMonth in _listCal.ListOfYearMonthsWithTotalDays)
+            foreach (int yearToProcess in _listCal.Years)
             {
-                Body.Add(_processor.HtmlBodyScriptGenerator(yearsDaysOfMonth.Item1, yearsDaysOfMonth.Item2, yearsDaysOfMonth.Item3));
+                foreach (var yearsDaysOfMonth in _listCal.ListOfMonthsWithTotalDays)
+                {
+                    Body.Add(_processor.HtmlBodyScriptGenerator(yearToProcess, yearsDaysOfMonth.Item1, yearsDaysOfMonth.Item2));
+                }
+                string html =_processor.HtmlHeaderScript(yearToProcess) + string.Join("", Body) + _processor.HtmlFooterScript();
+                File.WriteAllText(@"C:\Calendar " + yearToProcess + ".html", html);
             }
-            string html = string.Join("", _processor.HtmlHeaderScript(year) + Body + _processor.HtmlFooterScript());
-            File.WriteAllText(@"C:\Calendar " + year + ".html", html);
 
             Console.WriteLine("Html file is created under C drive with name as: Calendar.htm");
         }
