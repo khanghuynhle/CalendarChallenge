@@ -1,6 +1,8 @@
 ﻿using CalendarChallenge.Interface;
 using CalendarChallenge.Property;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace CalendarChallenge
 {
@@ -13,7 +15,8 @@ namespace CalendarChallenge
         }
         public void AddMonth()
         {
-            _listCalendar.ListOfMonthsWithYears = new System.Collections.Generic.List<Tuple<int, string>>();
+            _listCalendar.ListOfMonthsWithYears = new List<Tuple<int, string>>();
+            _listCalendar.TotalMonths = new List<int>();
             foreach (int year in _listCalendar.Years)
             {
                 if(year == 1582)
@@ -36,6 +39,7 @@ namespace CalendarChallenge
                     _listCalendar.ListOfMonthsWithYears.Add(new Tuple<int, string>(year, "November"));
                     _listCalendar.ListOfMonthsWithYears.Add(new Tuple<int, string>(year, "December"));
                 }
+                _listCalendar.TotalMonths.Add(_listCalendar.ListOfMonthsWithYears.Where(x => x.Item1 == year).Count());
             }
         }
     }

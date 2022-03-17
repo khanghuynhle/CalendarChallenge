@@ -9,5 +9,6 @@ namespace CalendarChallenge.Property
         public List<Tuple<int, string>> ListOfMonthsWithYears { get; set; }
         public List<int> FirstDayOfYears { get; set; }
         public List<int> TotalDaysOfMonths { get; set; }
+        public List<int> TotalMonths { get; set; }
     }
 }

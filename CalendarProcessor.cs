@@ -13,63 +13,52 @@ namespace CalendarChallenge
         {
             _listCal = listCal;
         }
-        public void CalendarUIGenerator(int year, int daysInMonth)
-        {
-            File.WriteAllText(@"C:\Calendar.html", HtmlScriptGenerator(year, daysInMonth));
 
-        }
-
-        private string HtmlScriptGenerator(int year, int daysInMonth)
+        public string HtmlHeaderScript(int year)
         {
             string header = "<!DOCTYPE html>< html >< head ><title>Calendar of " + year.ToString() + "</title></ head >";
-            string footer = "</div> </ body > </ html >";
-            string body = HtmlBodyGenerator(year, daysInMonth);
-            string html = header + body + footer;
-            return html;
+            return header;
         }
 
-        private string HtmlBodyGenerator(int year, int daysInMonth)
+        public string HtmlBodyScriptGenerator(int year, int daysInMonth)
         {
-            string daysInAWeek = "<div class=\"jzdbox1 jzdbasf jzdcal\"> < span >Su</span>< span > Mo </ span >< span > Tu </ span >< span > We </ span >< span > Th </ span >< span > Fr </ span >< span > Sa </ span > ";
-
             string monthsDaysWeekDaysScript = GenerateMonthsScript(year, daysInMonth);
 
-            string body = daysInAWeek + monthsDaysWeekDaysScript;
-            return body;
+            return monthsDaysWeekDaysScript;
+        }
+
+        public string HtmlFooterScript()
+        {
+            string footer = "</div> </ body > </ html >";
+            return footer;
         }
 
         private string GenerateMonthsScript(int year, int daysInMonth)
         {
             List<string> monthToDisplay = new List<string>();
             List<string> daysToDisplay = new List<string>();
-
-            for (int i = 0; i < _listCal.ListOfMonthsWithYears.Count; i++)
+            string daysInAWeek = "<div class=\"jzdbox1 jzdbasf jzdcal\"> < span >Su</span>< span > Mo </ span >< span > Tu </ span >< span > We </ span >< span > Th </ span >< span > Fr </ span >< span > Sa </ span > ";
+            foreach (int totalMonth in _listCal.TotalMonths)
             {
-                string month = _listCal.ListOfMonthsWithYears[i].Item2;
-                string monthMakeUp = "< div class=\"jzdcalt\">" + month.ToString() + "</div>";
-
-                //add empty spaces before the first month
-                if (_listCal.ListOfMonthsWithYears[i].Item2.Equals("Janurary"))
-                    daysToDisplay.Add(GenerateEmptySpaces((int)_listCal.FirstDayOfYears[0], 0));
-                else if (_listCal.ListOfMonthsWithYears[i].Item2.Equals("October") && year == 1582)
-                    daysToDisplay.Add(GenerateEmptySpaces(0, 0));
-
-                //add weeks of this month
-                foreach (int firstDay in _listCal.FirstDayOfYears)
+                for (int i = 0; i < totalMonth; i++)
                 {
-                    for (int weekDay = 0; weekDay < firstDay; weekDay++)
-                    {
-                        //calculate how many empty days before the starting day
+                    string month = _listCal.ListOfMonthsWithYears[i].Item2;
+                    string monthMakeUp = "< div class=\"jzdcalt\">" + month.ToString() + "</div>";
 
-                        for (int day = 1; day <= daysInMonth; day++)
-                        {
-                            if (++weekDay > 6)
-                            {
-                                weekDay = 0;
-                            }
-                            daysToDisplay.Add("<span>" + day + "</span>");
-                        }
+                    //add empty spaces before the first month
+                    if (_listCal.ListOfMonthsWithYears[i].Item2.Equals("Janurary"))
+                        daysToDisplay.Add(GenerateEmptySpaces((int)_listCal.FirstDayOfYears[0], 0));
+                    else if (_listCal.ListOfMonthsWithYears[i].Item2.Equals("October") && year == 1582)
+                        daysToDisplay.Add(GenerateEmptySpaces(0, 0));
+
+                    //add weeks of this month
+                    //calculate how many empty days before the starting day
+
+                    for (int day = 1; day <= daysInMonth; day++)
+                    {
+                        daysToDisplay.Add("<span>" + day + "</span>");
                     }
+                    monthToDisplay.Add(daysInAWeek);
                     monthToDisplay.Add(monthMakeUp);
                     monthToDisplay.AddRange(daysToDisplay);
                 }
@@ -84,16 +73,16 @@ namespace CalendarChallenge
             int emptyDays = GetEmptyDays(startDate, weekDay);
             List<string> emptyDaysScripts = new List<string>();
 
-            for (int i = 0; i <= emptyDays; i++)
+            for (int i = 1; i <= emptyDays; i++)
             {
                 emptyDaysScripts.Add("<span class=\"jzdb\"><!--BLANK--></span>");
             }
 
-            return emptyDays.ToString();
+            return emptyDaysScripts.ToString();
         }
         private int GetEmptyDays(int startDate, int weekDay)
         {
-            int emptyDays = startDate - weekDay;
+            int emptyDays = startDate - weekDay - 1;
             return emptyDays;
         }
 

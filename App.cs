@@ -1,6 +1,7 @@
 ﻿using CalendarChallenge.Interface;
 using CalendarChallenge.Property;
 using System;
+using System.IO;
 
 namespace CalendarChallenge
 {
@@ -44,21 +45,19 @@ namespace CalendarChallenge
             //generate HTML page here
             foreach(int yearToProcess in _listCal.Years)
             {
+                string body ="";
+
                 //passing in totalDaysOfMonths based on the year
-                for (int i = 0; i < _listCal.TotalDaysOfMonths.Count; i++)
+                foreach (int daysOfMonth in _listCal.TotalDaysOfMonths)
                 {
-                    if(yearToProcess == 1582)
-                    {
-                        i = 9;
-                    }
-                    else
-                    {
-                        i = 0;
-                    }
-                    _processor.CalendarUIGenerator(yearToProcess, _listCal.TotalDaysOfMonths[i]);
+                    body = _processor.HtmlBodyScriptGenerator(yearToProcess, daysOfMonth);
                 }
+                string html = _processor.HtmlHeaderScript(year) + body + _processor.HtmlFooterScript();
+                File.WriteAllText(@"C:\Calendar " + year + ".html", html);
+
             }
             Console.WriteLine("Html file is created under C drive with name as: Calendar.htm");
+
 
         }
     }
