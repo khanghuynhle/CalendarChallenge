@@ -9,7 +9,6 @@ namespace CalendarChallenge.Helper
     internal class DayHelper : IDayHelper
     {
         private readonly ListOfCalendar _listCalendar;
-        private List<Tuple<int, int>> daysForward = new List<Tuple<int, int>>();
         public DayHelper(ListOfCalendar listCalendar)
         {
             _listCalendar = listCalendar;
