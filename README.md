@@ -5,6 +5,8 @@ To run this:
 This can be found in class App method Run()
 The line you are looking for is File.WriteAllText("C:\\Calendar of "+ yearToProcess + ".html", html);
 
+- You need to copy the styles.css to the same folder you created the HTML files
+
 Caveat:
 - As this is more of an UI testing, and relatively small program, there isn't any unit tests for it. This can be added and checking but would still worth looking at UI more. (decided to go for manual testing)
 - 
