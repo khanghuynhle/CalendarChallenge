@@ -2,12 +2,14 @@
 using CalendarChallenge.Property;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace CalendarChallenge.Helper
 {
     internal class DayHelper : IDayHelper
     {
         private readonly ListOfCalendar _listCalendar;
+        private List<Tuple<int, int>> daysForward = new List<Tuple<int, int>>();
         public DayHelper(ListOfCalendar listCalendar)
         {
             _listCalendar = listCalendar;
@@ -19,27 +21,45 @@ namespace CalendarChallenge.Helper
             _listCalendar.TotalDaysOfMonths = new System.Collections.Generic.List<int>();
             _listCalendar.TotalDaysOfMonths.AddRange(totalDays);
 
-            if((year%4 == 0 && year%100 != 0) || year % 400 == 0)
+            if ((year % 4 == 0 && year % 100 != 0) || year % 400 == 0)
             {
                 _listCalendar.TotalDaysOfMonths[1] = 29;
             }
-            if(year == 1582)
+            if (year == 1582)
             {
                 _listCalendar.TotalDaysOfMonths.RemoveRange(0, 9);
             }
         }
-        public void CalculateFirstDayOfMonth(int year, int firstDay, int daysInMonth)
+        public void CalculateFirstDayOfMonth(List<int> years, List<int> firstDays, List<Tuple<int, string>> listOfTotaldaysOfAMonth)
         {
-            int dayLeft = CalculateDaysLeftInMonth(firstDay, daysInMonth);
-            int dayForward = CauclateDayForwardInMonth(dayLeft, daysInMonth);
-            _listCalendar.YearDayForward = new List<Tuple<int, int>>
+            _listCalendar.YearDayForward = new List<Tuple<int, int>>();
+            _listCalendar.YearDayLeft = new List<Tuple<int, int>>();
+            var daysInMonth = listOfTotaldaysOfAMonth.Select(x => x.Item1);
+
+            int dayLeft, dayForward = 0;
+
+            foreach (int firstDay in firstDays)
             {
-                new Tuple<int, int>(year, dayForward)
-            };
-            _listCalendar.YearDayLeft = new List<Tuple<int, int>>
-            {
-                new Tuple<int, int>(year, dayLeft)
-            };
+                int k = 0;
+                var year = years.ElementAt(k);
+
+                for (int i = 0; i < listOfTotaldaysOfAMonth.Count; i++)
+                {
+                    if(i == 0)
+                    {
+                        dayLeft = CalculateDaysLeftInFirstMonth(firstDay, daysInMonth.ElementAt(i));
+                    }
+                    else
+                    {
+                        dayLeft = CalculateDaysLeftNextMonth(dayForward, daysInMonth.ElementAt(i));
+                    }
+                    dayForward = CauclateDayForwardInMonth(dayLeft, daysInMonth.ElementAt(i));
+
+                    _listCalendar.YearDayForward.Add(new Tuple<int, int>(year, dayForward));
+                    _listCalendar.YearDayLeft.Add(new Tuple<int, int>(year, dayLeft));
+                }
+                k++;
+            }
         }
 
         private int CauclateDayForwardInMonth(int daysLeft, int daysInMonth)
@@ -49,10 +69,24 @@ namespace CalendarChallenge.Helper
             return dayForwards;
         }
 
-        private int CalculateDaysLeftInMonth(int firstDay, int daysInMonth)
+        private int CalculateDaysLeftInFirstMonth(int firstDay, int daysInMonth)
         {
             int daysLeft = 35 - firstDay + 1 - daysInMonth;
             return daysLeft;
+        }
+        private int CalculateDaysLeftNextMonth(int dayForward, int daysInMonth)
+        {
+            int dayLeft;
+            if (dayForward < 6)
+            {
+                dayLeft = 35 - dayForward - daysInMonth;
+            }
+            else
+            {
+                dayLeft = 42 - dayForward - daysInMonth;
+            }
+
+            return dayLeft;
         }
     }
 }

@@ -45,12 +45,8 @@ namespace CalendarChallenge
             }
 
             //add month
-            foreach (int firstday in _listCal.FirstDayOfYears) {
-                for (int i = 0; i < _listCal.ListOfTotaldaysOfAMonth.Count; i++)
-                {
-                    _dayHelper.CalculateFirstDayOfMonth(_listCal.FirstDayOfYears.IndexOf(firstday) + 1, firstday, _listCal.ListOfTotaldaysOfAMonth[i].Item1);
-                }
-            }
+           _dayHelper.CalculateFirstDayOfMonth(_listCal.Years, _listCal.FirstDayOfYears, _listCal.ListOfTotaldaysOfAMonth);
+
             //generate HTML page here
             Body = new List<string>();
             //passing in totalDaysOfMonths based on the year

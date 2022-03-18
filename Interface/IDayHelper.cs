@@ -7,6 +7,6 @@ namespace CalendarChallenge.Interface
     public interface IDayHelper
     {
         void GetTotalDaysInMonths (int year);
-        void CalculateFirstDayOfMonth(int year, int firstDay, int daysInMonth);
+        void CalculateFirstDayOfMonth(List<int> years, List<int> firstDays, List<Tuple<int, string>> listOfTotaldaysOfAMonth);
     }
 }
