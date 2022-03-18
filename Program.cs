@@ -33,7 +33,6 @@ namespace CalendarChallenge
             services.AddTransient<IYearHelper, YearHelper>();
 
             services.AddSingleton<ListOfCalendar>();
-            services.AddSingleton<Calendar>();
 
             services.AddTransient<App>();
 
