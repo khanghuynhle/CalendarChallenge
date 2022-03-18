@@ -52,13 +52,13 @@ namespace CalendarChallenge
             //passing in totalDaysOfMonths based on the year
             foreach (int yearToProcess in _listCal.Years)
             {
-                
                 foreach (var yearsDaysOfMonth in _listCal.ListOfTotaldaysOfAMonth)
                 {
                     Body.Add(_processor.HtmlBodyScriptGenerator(yearToProcess, yearsDaysOfMonth.Item1, yearsDaysOfMonth.Item2));
                 }
                 string html =_processor.HtmlHeaderScript(yearToProcess) + string.Join("", Body) + _processor.HtmlFooterScript();
                 File.WriteAllText("C:\\Calendar of "+ yearToProcess + ".html", html);
+                Body.Clear();
             }
 
             Console.WriteLine("Html file is created under C drive with name as: Calendar.htm");

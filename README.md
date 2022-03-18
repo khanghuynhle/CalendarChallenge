@@ -9,7 +9,7 @@ The line you are looking for is File.WriteAllText("C:\\Calendar of "+ yearToProc
 
 Caveat:
 - As this is more of an UI testing, and relatively small program, there isn't any unit tests for it. This can be added and checking but would still worth looking at UI more. (decided to go for manual testing)
-- 
+- There are loops that is dodgy and need to be looked at and improve. It works for now but need to be fixed
 Known isses:
 - Dates in calendar need to be more alligned with weekdays, there are some unalligned days, although not completely but might worth fixing
 

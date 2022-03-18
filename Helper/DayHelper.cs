@@ -71,10 +71,17 @@ namespace CalendarChallenge.Helper
 
             return dayForwards;
         }
-
         private int CalculateDaysLeftInFirstMonth(int firstDay, int daysInMonth)
         {
-            int daysLeft = 35 - firstDay + 1 - daysInMonth;
+            int daysLeft = 0;
+            if (firstDay >= 6)
+            {
+                daysLeft = 42 - firstDay + 1 - daysInMonth;
+            }
+            else
+            {
+                daysLeft = 35 - firstDay + 1 - daysInMonth;
+            }
             return daysLeft;
         }
         private int CalculateDaysLeftNextMonth(int dayForward, int daysInMonth)
