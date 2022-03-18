@@ -17,7 +17,7 @@ namespace CalendarChallenge.Helper
 
         public void GetTotalDaysInMonths(int year)
         {
-            int[] totalDays = new int[] { 31, 28, 31, 30, 31, 30, 31, 30, 31, 31, 30, 31 };
+            int[] totalDays = new int[] { 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
             _listCalendar.TotalDaysOfMonths = new System.Collections.Generic.List<int>();
             _listCalendar.TotalDaysOfMonths.AddRange(totalDays);
 
@@ -37,10 +37,10 @@ namespace CalendarChallenge.Helper
             var daysInMonth = listOfTotaldaysOfAMonth.Select(x => x.Item1);
 
             int dayLeft, dayForward = 0;
+            int k = 0;
 
             foreach (int firstDay in firstDays)
             {
-                int k = 0;
                 var year = years.ElementAt(k);
 
                 for (int i = 0; i < listOfTotaldaysOfAMonth.Count; i++)
@@ -65,6 +65,10 @@ namespace CalendarChallenge.Helper
         private int CauclateDayForwardInMonth(int daysLeft, int daysInMonth)
         {
             int dayForwards = 7 - daysLeft;
+            if(dayForwards == 7)
+            {
+                dayForwards = 0;
+            }
 
             return dayForwards;
         }

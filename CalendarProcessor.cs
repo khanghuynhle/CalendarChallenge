@@ -39,7 +39,7 @@ namespace CalendarChallenge
             List<string> monthToDisplay = new List<string>();
             string daysInAWeek = "<ul class=\"weekdays\"><li>Mo</li><li>Tu</li><li>We</li><li>Th</li><li>Fr</li><li>Sa</li><li>Su</li></ul><ul class=\"days\">";
 
-            string monthMakeUp = "<div class=\"month\"> <ul><li class=\"prev\">&#10094;</li><li class=\"next\">&#10095;</li><li>" + month + "<br></li></ul></div>";
+            string monthMakeUp = "<div class=\"month\"> <ul><li>" + month + "<br></li></ul></div>";
             monthToDisplay.Add(monthMakeUp);
 
             //add empty spaces before the first month of the years
@@ -60,7 +60,12 @@ namespace CalendarChallenge
             //add weeks of this month
             //calculate how many empty days before the starting day
             monthToDisplay.Add(daysInAWeek);
-            var repeatedTimes = _listCal.YearDayForward.Select(x => x.Item2).ElementAt(_listCal.ListOfTotaldaysOfAMonth.IndexOf(new Tuple<int,string>(daysInMonth, month)));
+            int repeatedTimes =0;
+            var index = _listCal.ListOfTotaldaysOfAMonth.IndexOf(new Tuple<int, string>(daysInMonth, month));
+            if (month != "Janurary")
+            {
+                repeatedTimes = _listCal.YearDayForward.Select(x => x.Item2).ElementAt(index - 1);
+            }
             //wrap the forward days here
             monthToDisplay.AddRange(GenerateEmptySpaceRemainingMonths(repeatedTimes));
 
@@ -98,7 +103,7 @@ namespace CalendarChallenge
             {
                 for (int i = 1; i <= emptyDays; i++)
                 {
-                    emptyDaysScripts.Add("<li> X </li>");
+                    emptyDaysScripts.Add("<li>X</li>");
                 }
                 return emptyDaysScripts;
             }
@@ -109,7 +114,7 @@ namespace CalendarChallenge
             List<string> spaces = new List<string>();
             for(int i = 0; i < timeRepeated; i++)
             {
-                spaces.Add("<li> X </li>");
+                spaces.Add("<li>X</li>");
             }
             return spaces;
         }
@@ -122,7 +127,7 @@ namespace CalendarChallenge
 
         public int GetFirstDayOfYear(int year)
         {
-            int firstDay = (((year - 1) * 365) + ((year - 1) / 4) - ((year - 1) / 100) + ((year) / 400) + 1) % 7;
+            int firstDay = (((year - 1) * 365) + ((year - 1) / 4) - ((year - 1) / 100) + ((year) / 400)) % 7;
             return firstDay;
         }
     }

@@ -31,9 +31,9 @@ namespace CalendarChallenge
 				_listCalendar.Years.Add(year + 1);
 			}
             else {
+				_listCalendar.Years.Add(year - 1);
 				_listCalendar.Years.Add(year);
 				_listCalendar.Years.Add(year + 1);
-				_listCalendar.Years.Add(year - 1);
 			}
 		}
 		

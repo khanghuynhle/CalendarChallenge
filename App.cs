@@ -58,7 +58,7 @@ namespace CalendarChallenge
                     Body.Add(_processor.HtmlBodyScriptGenerator(yearToProcess, yearsDaysOfMonth.Item1, yearsDaysOfMonth.Item2));
                 }
                 string html =_processor.HtmlHeaderScript(yearToProcess) + string.Join("", Body) + _processor.HtmlFooterScript();
-                File.WriteAllText(@"C:\Calendar " + yearToProcess + ".html", html);
+                File.WriteAllText("C:\\Calendar of "+ yearToProcess + ".html", html);
             }
 
             Console.WriteLine("Html file is created under C drive with name as: Calendar.htm");
